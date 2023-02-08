@@ -29,6 +29,8 @@ void set_light_state(int roomId, bool powered, int intensity);
 void toggle_light(void*);
 
 void setup() {
+  Serial.begin(115200);
+  pinMode(27, INPUT);
   for (int i = 1; i <= 3; i++) {
     pinMode(LED_PINS[i-1], OUTPUT);
     ledcSetup(i, 5000, 8);
@@ -40,7 +42,7 @@ void setup() {
       "Lights Sync",
       10240,
       NULL,
-      0,
+      1,
       &taskGetAPI,
       1
   );
