@@ -1,4 +1,5 @@
 #include <Arduino.h>
+<<<<<<< HEAD
 #include <HTTPClient.h>
 #define RED 26
 #define RED_BUTTON 2
@@ -104,3 +105,16 @@ void click_2(){
   }
    check_2 =1;
 }
+=======
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <Bounce2.h>
+
+void setup() {
+
+}
+
+void loop() {
+
+}
+>>>>>>> f6ff9cd1193d962c5bae742c86afd588892b1457
