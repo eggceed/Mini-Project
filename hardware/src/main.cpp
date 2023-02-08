@@ -10,7 +10,7 @@ bool powered[3] = {0, 0, 0};
 int LED_PINS[3] = {26, 25, 33};
 int SW_PINS[3] = {T5, T1, T2};
 
-const String API_URL = "http://ecourse.cpe.ku.ac.th/exceed03/light";
+const String API_URL = "https://ecourse.cpe.ku.ac.th/exceed03/light/";
 HTTPClient httpClient;
 DynamicJsonDocument data(1024);
 
@@ -75,7 +75,7 @@ void update_lights(void* param) {
       String payload = httpClient.getString();
       deserializeJson(data, payload);
       
-      JsonArray arr = data["rooms"].as<JsonArray>();
+      JsonArray arr = data.as<JsonArray>();
       for (JsonVariant room : arr) {
         set_light_state(room["id"].as<int>(), room["powered"].as<bool>(), room["intensity"].as<int>());
       }
@@ -89,6 +89,7 @@ void update_lights(void* param) {
 }
 
 void set_light_state(int roomId, bool powered, int intensity) {
+  Serial.print("SETTING LIGHT "); Serial.print(roomId); Serial.print(" "); Serial.println(powered ? "ON" : "OFF");
   ledcWrite(roomId,
     (powered ? map(intensity, 0, 100, 0, 255) : 0)
   );
