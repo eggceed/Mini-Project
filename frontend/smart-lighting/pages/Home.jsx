@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Card from '../components/card'
+import Card from '../components/Card'
 import '../styles/Home.css'
 
 const sampleData = [
@@ -13,14 +13,14 @@ const sampleData = [
     {
         "id": 2,
         "name": "Bedroom2",
-        "intensity": 100,
+        "intensity": 50,
         "pewered": true,
         "isAuto": true
       },
       {
         "id": 3,
         "name": "Bedroom3",
-        "intensity": 100,
+        "intensity": 20,
         "pewered": true,
         "isAuto": true
       },
