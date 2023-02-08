@@ -1,10 +1,23 @@
 #include <Arduino.h>
+#include <WiFi.h>
 #include <HTTPClient.h>
 #include <Bounce2.h>
 #include <ArduinoJson.h>
 #include "credentials.h"
 
 #define GET_INTERVAL 5000
+
+int check = 0;
+int check_1 = 0;
+int check_2 = 0;
+
+void click();
+void click_1();
+void click_2();
+
+int touch_red;
+int touch_yellow;
+int touch_green;
 
 bool powered[3] = {0, 0, 0};
 int LED_PINS[3] = {26, 25, 33};
@@ -28,6 +41,54 @@ void update_lights(void*);
 void set_light_state(int roomId, bool powered, int intensity);
 void toggle_light(void*);
 
+void click(){
+  if(check){
+    return;
+  }
+    xTaskCreatePinnedToCore(
+        toggle_light,
+        "Toggle Light",
+        10240,
+        (void*) 1, // Substitute this with pin
+        2,
+        &taskPutAPI,
+        1
+    );
+   check =1;
+}
+
+void click_1(){
+  if(check_1){
+    return;
+  }
+    xTaskCreatePinnedToCore(
+        toggle_light,
+        "Toggle Light",
+        10240,
+        (void*) 2, // Substitute this with pin
+        2,
+        &taskPutAPI,
+        1
+    );
+   check_1 =1;
+}
+
+void click_2(){
+  if(check_2){
+    return;
+  }
+    xTaskCreatePinnedToCore(
+        toggle_light,
+        "Toggle Light",
+        10240,
+        (void*) 3, // Substitute this with pin
+        2,
+        &taskPutAPI,
+        1
+    );
+   check_2 =1;
+}
+
 void setup() {
   Serial.begin(115200);
   pinMode(27, INPUT);
@@ -49,18 +110,32 @@ void setup() {
 }
 
 void loop() {
-  // Condition to toggle with pin.
-  if (0) {
-    xTaskCreatePinnedToCore(
-        toggle_light,
-        "Toggle Light",
-        10240,
-        (void*) 1, // Substitute this with pin
-        2,
-        &taskPutAPI,
-        1
-    );
+  touch_red = touchRead(SW_PINS[0]);
+  touch_yellow = touchRead(SW_PINS[1]);
+  //Serial.println(touchRead(YELLOW_BUTTON));
+  touch_green = touchRead(SW_PINS[2]);
+  if(touch_red < 50)
+  {
+    click();
   }
+  else{
+    check =0;
+  }
+  if(touch_yellow < 47)
+  {
+    click_1();
+  }
+  else{
+    check_1 = 0;
+  }
+  if(touch_green < 38)
+  {
+    click_2();
+  }
+  else{
+    check_2 = 0;
+  }
+  delay(10);
 }
 
 void update_lights(void* param) {
@@ -110,6 +185,7 @@ void toggle_light(void* param) {
   serializeJson(doc, json);
 
   httpClient.begin(API_URL);
+  httpClient.addHeader("Content-Type", "application/json");
   int responseCode = httpClient.PUT(json);
 
   if (responseCode == 200) {

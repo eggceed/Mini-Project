@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,3 +128,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+=======
+.pio
+.clang_complete
+.gcc-flags.json
+.ccls
+>>>>>>> f6ff9cd1193d962c5bae742c86afd588892b1457
