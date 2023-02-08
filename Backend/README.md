@@ -4,8 +4,9 @@
 ## database structure:
 ### class Room(BaseModel):
     id:int
-    name:str = '' 
-    type:str = 'web' ->web or device
+    name:str = ''
     intensity:int=100
     powered:bool=False
     isAuto:bool=False
+### class Req_dep(BaseModel):
+    type:str = ''
