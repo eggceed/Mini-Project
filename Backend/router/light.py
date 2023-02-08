@@ -23,7 +23,7 @@ if(collection.count_documents({})==0):
 
 @router.get('/')
 def view_roomdata():
-    return list(collection.find())
+    return list(collection.find({},{'_id':0}))
 
 @router.put('/')
 def update_roomdata(room:Room):
