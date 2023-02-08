@@ -1,0 +1,12 @@
+.card {
+    border-radius: 10%;
+    background-color: gray;
+    padding: 2rem;
+    gap: 2rem;    
+}
+
+.header {
+    color: navy;
+    font-size: 10px;
+
+}
