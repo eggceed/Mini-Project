@@ -1,0 +1,9 @@
+Switch {
+    margin-top: 100px;
+}
+
+.component {
+    margin-bottom: 2rem;
+    /* display: grid; */
+    /* flex-direction: row; */
+}

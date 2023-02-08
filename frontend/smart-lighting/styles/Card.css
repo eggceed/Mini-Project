@@ -10,3 +10,8 @@
     font-size: 10px;
 
 }
+
+.btnlist {
+    display: flex;
+    gap: 2rem;
+}

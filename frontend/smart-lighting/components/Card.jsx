@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import '../styles/Card.css'
 import Light from '../components/Light'
-
+import ManualButton from './ManualButton'
+import AutoButton from './AutoButton'
 
 const Card = ({id, name, intensity, powered, isAuto}) => {
     
@@ -12,11 +13,15 @@ const Card = ({id, name, intensity, powered, isAuto}) => {
         <div className='header'>
             {/* <h1>Room {id}</h1> */}
             <h1>{name}</h1> 
-            <p>{intensity}</p>       
+            {/* <p>{intensity}</p>        */}
         </div>
-        <div>
-            <Light/>
-        </div>
+        
+        <div className='btnlist'>
+          <ManualButton/>
+        <AutoButton/>
+           
+        </div> 
+        <Light/>
     </div>
   )
 }
