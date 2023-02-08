@@ -8,7 +8,7 @@
 
 bool powered[3] = {0, 0, 0};
 int LED_PINS[3] = {26, 25, 33};
-int SW_PINS[3] = {T0, T1, T2};
+int SW_PINS[3] = {T5, T1, T2};
 
 const String API_URL = "http://ecourse.cpe.ku.ac.th/exceed03/light";
 HTTPClient httpClient;
@@ -94,6 +94,28 @@ void set_light_state(int roomId, bool powered, int intensity) {
 }
 
 void toggle_light(void* param) {
+  vTaskSuspend(taskGetAPI);
+
   int channel = (int)(size_t) param;
   set_light_state(channel, !powered[channel - 1], ledcRead(channel));
+
+  DynamicJsonDocument doc(512);
+  String json;
+  doc["type"] = "device";
+  doc["id"] = channel;
+  doc["powered"] = powered[channel - 1];
+  serializeJson(doc, json);
+
+  httpClient.begin(API_URL);
+  int responseCode = httpClient.PUT(json);
+
+  if (responseCode == 200) {
+    Serial.println("Successfully update status to API.");
+  } else {
+    Serial.print("HTTP Error: ");
+    Serial.println(responseCode);
+  }
+
+  vTaskResume(taskGetAPI);
+  vTaskDelete(nullptr);
 }
