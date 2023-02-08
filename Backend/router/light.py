@@ -7,12 +7,19 @@ from typing import Union,Optional,List
 class Room(BaseModel):
     id:int
     name:str = '' 
-    type:str 
+    type:str = 'web' #web or device
     intensity:int=100
     powered:bool=False
     isAuto:bool=False
 
 router = APIRouter(prefix='/light')
+
+if(collection.count_documents({})==0):
+    collection.insert_many([
+        {'id':1,'name':'Living Room','intensity':100,'powered':False,'isAuto':False},
+        {'id':2,'name':'Bedroom','intensity':100,'powered':False,'isAuto':False},
+        {'id':3,'name':'Kitchen','intensity':100,'powered':False,'isAuto':False}
+    ])
 
 @router.get('/')
 def view_roomdata():
