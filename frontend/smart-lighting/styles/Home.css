@@ -1,0 +1,6 @@
+.list-room {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    padding: 2rem;
+}
