@@ -9,3 +9,4 @@
     intensity:int=100
     powered:bool=False
     isAuto:bool=False
+### 
